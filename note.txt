@@ -1,0 +1,9 @@
+NodeJs :
+    - JS runtime environment ( execute JS code outside the browser)
+    - NodeJs is C++ program and needs V8 engine to understand JS code that’s why you will find V8 folder in dependencies 
+    - NodeJs is C++ program so you can combine between features in JS and Features inC++
+    - Lib folder in dependencies help developers to access C++ features from JS 
+    - In NodeJs you don’t have access to web Api
+
+
+ 
