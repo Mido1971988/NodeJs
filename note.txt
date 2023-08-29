@@ -61,3 +61,16 @@
 
 * Path check index.js
 
+* Events (Built-in) : 
+    steps : 
+    [1] import EventEmitter Class const EventEmitter = require("node:events");
+    [2] create emitter instance from EventEmitter Class ( emitter instance has on and emitt methods)
+    [3] emitter.on (like addEventListener )
+    [4] emitter.emitt ( like click or disptaching the event ) ( you can add arguments starting from 2nd parameters)
+
+* Extend with buil-in Event check index.js
+
+* To understand Character set , Encoding, Streams and buffer watch these Videos : 
+    https://youtu.be/0LYXkL0pr1M?si=-HtSPPEvMQqL6kz0
+    https://youtu.be/br8VB99qPzE?si=hzlOvXD3RO8_kPP2
+

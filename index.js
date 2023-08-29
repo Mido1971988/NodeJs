@@ -46,3 +46,61 @@ const path = require("node:path");
 // console.log(path.resolve("/folder1", "//folder2", "index.html")); // //folder2 means this is root folder
 // console.log(path.resolve("/folder1", "//folder2", "../index.html")); // output : /index.html because folder2 is the root and you go up by using .. so will be only index.html
 // console.log(path.resolve(__dirname, "data.json"));
+
+// ---- buil-in Event
+// const EventEmitter = require("node:events");
+// const emitter = new EventEmitter();
+
+// // Register a listener
+// emitter.on("order-pizza", (size, topping) => {
+//     console.log(`Order received! Baking a ${size} pizza with ${topping}`);
+// });
+
+// // Register another listener
+// emitter.on("order-pizza", (size) => {
+//     if (size === "large") {
+//         console.log("Serving complimentary drink");
+//     }
+// });
+
+// // Emit an event
+// emitter.emit("order-pizza", "large", "mushrooms");
+
+//----- extend with built-in event
+
+const EventEmitter = require("events");
+
+class PizzaShop extends EventEmitter {
+    constructor() {
+        super();
+        this.orderNumber = 0;
+    }
+
+    order(size, topping) {
+        this.orderNumber++;
+        this.emit("order", size, topping);
+    }
+
+    displayOrderNumber() {
+        console.log(`Current order number: ${this.orderNumber}`);
+    }
+}
+
+class DrinkMachine {
+    serveDrink(size) {
+        if (size === "large") {
+            console.log("Serving complimentary drink");
+        }
+    }
+}
+
+const pizzaShop = new PizzaShop();
+const drinkMachine = new DrinkMachine();
+
+pizzaShop.on("order", (size, topping) => {
+    console.log(`Order received! Baking a ${size} pizza with ${topping}`);
+    drinkMachine.serveDrink(size);
+});
+
+pizzaShop.order("large", "mushrooms");
+pizzaShop.displayOrderNumber();
