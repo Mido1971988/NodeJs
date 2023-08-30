@@ -74,3 +74,31 @@
     https://youtu.be/0LYXkL0pr1M?si=-HtSPPEvMQqL6kz0
     https://youtu.be/br8VB99qPzE?si=hzlOvXD3RO8_kPP2
 
+* fs(file system) ( check Exp. in index.js) :
+    * NodeJs has built-in Async methods ( like fs.readFile() or fs.writeFile() )  not like JS needs browsers or Web Api to do Async
+    * fs.writeFile() method by default will overwrite any content in file so we can add {flag: "a",}
+        to append to the file not to overwrite
+    * promise with fs : performance in regular fs is better than fs promise (check Exp. in index.js)
+
+* Stream :
+    - is a sequence of data that is being moved from one point to another over time
+    - Stream is infact a built-in node module that inherits from the event emitter class 
+        that’s why readableStream has on method ( inherited it from event emitter class)
+
+    - Types of Streams
+        [1] Readable streams from which data can be read Ex: Reading from a file as readable stream
+        [2] Writable streams to which we can write data Ex: Writing to a file as writable stream
+        [3] Duplex streams that are both Readable and Writable Ex: Sockets as a duplex stream
+        [4] Transform streams that can modify or transform the data as it is written and read 
+            Ex: File compression where you can write compressed data and read de-compressed data to and from a file as a transform stream
+
+    - default chunk size if 64 bits but you can change this by addin highWaterMark: 2 (2bits) to options object 
+    - data event will be fired automatically ( no need to emitt it ) when data is received
+    - you can use pipe method instead of data event ( check exp. in index.js)
+    - chained pip ( works only with specific destination stream types : readable , duplex or transform Streams)
+    
+
+        
+        
+        
+        
