@@ -1,7 +1,7 @@
 * NodeJs :
     - JS runtime environment ( execute JS code outside the browser)
     - NodeJs is C++ program and needs V8 engine to understand JS code that’s why you will find V8 folder in dependencies 
-    - NodeJs is C++ program so you can combine between features in JS and Features inC++
+    - NodeJs is C++ program so you can combine between features in JS and Features in C++
     - Lib folder in dependencies help developers to access C++ features from JS 
     - In NodeJs you don’t have access to web Api
 
@@ -95,10 +95,44 @@
     - default chunk size if 64 bits but you can change this by addin highWaterMark: 2 (2bits) to options object 
     - data event will be fired automatically ( no need to emitt it ) when data is received
     - you can use pipe method instead of data event ( check exp. in index.js)
-    - chained pip ( works only with specific destination stream types : readable , duplex or transform Streams)
+    - chained pipe ( works only with specific destination stream types : readable , duplex or transform Streams)
     
+* HTTP Module :
+    - HTTP module extend EventEmitter Class 
+    - const server = http.createServer((request , response) => {}) 
+        To create server and accept callback function as argument 
+        This callback function request event listener 
+        Means when the server get request this callback function will be executed
+    - server.listen() to tell server to start listening at which port 
+        and can accept 2nd argument as callback function which will be executed when server start listening 
+    - response.end() accepts only type string or an instance of Buffer or Uint8Array.
+        So we use JSON.stringify() and we should add {"Content-Type" : "application/json"}
+    - to send html response we should add {"Content-Type" : "text/html"}
+    - you can send whole html file as a response like res.end(fs.readFileSync("./index.html"))
+    - using pipe is better performance than fs.readFileSync
+        fs.createReadStream("./index.html").pipe(res) 
+        is better than 
+        res.end(fs.readFileSync("./index.html"))
+    - if you want to add dynamic html ( for exp. add name from server to html file before send it as response) ( you can't use here pipe)
+        [1] let html = fs.readFileSync("./index.html" , "utf-8")
+        [2] const name = "Soliman"
+        [3] html = html.replace("{{name}}" , name) // string replace method
+        [4] res.end(html)
 
-        
-        
-        
-        
+* Routing (check index.js)
+
+* Thread Pool
+    - Libuv thread pool as the name indicates is literally a pool of threads, 
+    that NodeJS uses to offload time-consuming tasks ( like crypto.pbkdf2 ) 
+    and ensures the main thread is not blocked for a long time (Asynchronous)
+    
+    - videos to understand better :
+        https://youtu.be/I1sqnbJ1Fno?si=wCKSOM-EPqNCE610
+        https://youtu.be/I1sqnbJ1Fno?si=fLkMJOxOy7sXRr5z 
+
+    - you can change Thread pool size by ( process.env.UV_THREADPOOL_SIZE = 16;)
+        * note : each thread take one cpu core from your laptop 
+            for exp. if you have 4 cpu cores so for best performance make size of Thread pool to 4
+            if you make size of thread pool to 8 so each core will take 2 threads so will not give you best performance
+
+
