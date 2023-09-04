@@ -121,7 +121,11 @@
 
 * Routing (check index.js)
 
+
 * Thread Pool
+    - when you try to do Async in NodeJs , NodeJs will try to do it using native Async method ( kernal ) in 
+        your operating system and if that not possible then will try to use Thread Pool 
+
     - Libuv thread pool as the name indicates is literally a pool of threads, 
     that NodeJS uses to offload time-consuming tasks ( like crypto.pbkdf2 ) 
     and ensures the main thread is not blocked for a long time (Asynchronous)
@@ -134,5 +138,24 @@
         * note : each thread take one cpu core from your laptop 
             for exp. if you have 4 cpu cores so for best performance make size of Thread pool to 4
             if you make size of thread pool to 8 so each core will take 2 threads so will not give you best performance
-
+    - https.requesr is a network operation not CPU operation so will not use Thread pool will use native Async method
+        so no matter what is the Thread pool size if you make a request or 12 request all will be same time
+    
+* Event Loop ( see Experiment in event-loop.js): 
+    * note : see picture in 7:55 to understand event loop cycle ( https://youtu.be/L18RHG2DwwA?si=wt9JNr9wnrhR-nkf )
+    Order of Executions : 
+    1.Any callbacks in the micro task queues are executed. 
+        First, tasks in the nextTick queue and only then tasks in the promise queue
+    2.All callbacks within the timer queue are executed
+    3.Callbacks in the micro task queues if present are executed. 
+        Again, first tasks in the nextTick queue and then tasks in the promise queue
+    4.All callbacks within the l/O queue are executed
+    5.Callbacks in the micro task queues if present are executed. nextTick queue followed by
+        Promise queue.
+    6.All callbacks in the check queue are executed
+    7.Callbacks in the micro task queues if present are executed. 
+        Again, first tasks in the nextTick queue and then tasks in the promise queue
+    8.All callbacks in the close queue are executed
+    9.For one final time in the same loop, the micro task queues are executed. 
+        nextTick queue followed by promise queue.
 
