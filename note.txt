@@ -201,3 +201,17 @@
     - scripts : a shortcut written to use on terminal   
         for example instead of writting ( node index.js ) we can write in script ( "start" : "node index.js" )
         then on terminal we can write npm run start instead of node index.js
+
+* CLI ( command line interface) you can create your own program like npm or git :
+    -steps : 
+        [1] create package ( npm init )
+        [2] add (#!/usr/bin/env node) in index.js
+        [3] add "bin" : {"pokemon" : "index.js"} to package.json
+        [3] you can publish package to npm then install it or install it directly from computer
+            by (sudo npm install -g) in terminal will automatically install any package written in bin package.json
+            now when you write pokemon in terminal your program will run
+            * note : you should install fetch by ( npm install node-fetch@2 ) 
+                version 2 of node-fetch if you want to use commomJs 
+                if you want to use ES Module ( import ) use latest version
+        [4] if you want to pass an argument you can install yargs package ( npm install yargs)
+            then in terminal write argument like ( pokemon --pokemon=mew)
