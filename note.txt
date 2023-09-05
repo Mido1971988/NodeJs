@@ -191,7 +191,7 @@
             if you want to use VSCode edit sudoers file ( but will make computer slow so not recommended)
             steps : 
                 [1] sudo nano /etc/sudoers 
-                [2] add this line ( %sudo   ALL=(ALL) NOPASSWD: ALL) ( becarfull after %sudo tab not space)
+                [2] add this line ( %sudo   ALL=(ALL) NOPASSWD: ALL) ( becarfull after %sudo 2 tabs not space)
         
         * note : to remove global package ( npm uninstall -g nodemon  ) but this does not work for me so 
             use these steps : 
@@ -203,15 +203,51 @@
         then on terminal we can write npm run start instead of node index.js
 
 * CLI ( command line interface) you can create your own program like npm or git :
-    -steps : 
+    - steps : 
         [1] create package ( npm init )
         [2] add (#!/usr/bin/env node) in index.js
         [3] add "bin" : {"pokemon" : "index.js"} to package.json
-        [3] you can publish package to npm then install it or install it directly from computer
+        [4] you can publish package to npm then install it or install it directly from computer
             by (sudo npm install -g) in terminal will automatically install any package written in bin package.json
             now when you write pokemon in terminal your program will run
             * note : you should install fetch by ( npm install node-fetch@2 ) 
                 version 2 of node-fetch if you want to use commomJs 
                 if you want to use ES Module ( import ) use latest version
-        [4] if you want to pass an argument you can install yargs package ( npm install yargs)
+        [5] if you want to pass an argument you can install yargs package ( npm install yargs)
             then in terminal write argument like ( pokemon --pokemon=mew)
+        [6] if you want prompt user when the user start to run your package , you can use
+            inquirer package by ( npm install inquirer@8.2.5 ) version 8 because compatible with commomJs newer version compatible with ES Module
+        
+
+* The cluster module (cluster.js and no-cluster.js):
+    - provides a way of creating child processes that runs simultaneously and share the same server port. (bacause Node is single thread )
+    - Master and Workers : 
+        Master is only in charge of the workers 
+        Workers are in charge of handling incoming requests, reading files etc
+        Each worker gets its own event loop, memory, and V8 instance
+
+        steps : 
+            [1] const cluster = require("cluster");
+            [2] cluster.isMaster to check if Master is running so you can create workers by (cluster.fork();) 
+        * note : each worker take one core , so if you have 2 cpu cores so for best performance 2 workers is enough for you ( like Thread pool )
+            you can check your CPU core by ( const numOfCPUs = require("os").cpus().length; )
+    - you can use pm2 package to use cluster workers automatically without writing cluter code like in cluster.js
+        to install ( sudo npm install -g pm2 ) 
+        now you can use no-cluster.js file in cluster mode by (pm2 start no-cluster.js -i 0) 
+        0 here means use best number of workers according to this computer but if you write number that's means specific number of worker
+        and to stop using pm2 ( pm2 stop no-cluster.js)
+
+* Worker Thread Module (worker_thread.js and main-thread.js): 
+    - The worker threads module enables the use of threads that execute JavaScript in parallel
+    - difference between cluster Module and Worker Thread Module :
+        - The cluster module can be used to run multiple instances of Node.js that can distribute workloads
+        - worker_threads module allows running multiple application threads within a single Node.js instance
+            When process isolation is not needed, that is, no separate instances of V8, event loop and memory are needed, you should use worker_threads
+    - Steps : 
+        [1] const { Worker } = require("worker_threads");
+        [2] const worker = new Worker("./worker-thread.js");
+        [3] worker.on("message") // to take j variable from  worker-thread.js
+        [4] const { parentPort } = require("worker_threads"); then parentPort.postMessage(j); in worker_thread.js to send j variable
+
+
+    

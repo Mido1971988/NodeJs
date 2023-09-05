@@ -9,6 +9,7 @@
     "pokemon": "index.js"
   },
   "dependencies": {
+    "inquirer": "^8.2.5",
     "node-fetch": "^2.7.0",
     "yargs": "^17.7.2"
   },
