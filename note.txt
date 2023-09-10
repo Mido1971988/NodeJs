@@ -5,6 +5,13 @@
     - Lib folder in dependencies help developers to access C++ features from JS 
     - In NodeJs you don’t have access to web Api
 
+* Difference between NodeJs and Vanilla Js : 
+[1] node runs on a server not in a browser 
+[2] the console is in terminal ( you can write node on terminal then you can write js code in terminal )
+[3] global object instead of window object 
+[4] commonJs Module instead of ES Module 
+[5] missing some JS Api like fetch
+
 * Modules :
     A module is an encapsulated and reusable chunk of code that has its own context
     In Node.js, each file is treated as a separate module
@@ -79,7 +86,7 @@
     * fs.writeFile() method by default will overwrite any content in file so we can add {flag: "a",}
         to append to the file not to overwrite
     * promise with fs : performance in regular fs is better than fs promise (check Exp. in index.js)
-
+    * fs.appendFile will create file if not exist the add text inside it 
 * Stream :
     - is a sequence of data that is being moved from one point to another over time
     - Stream is infact a built-in node module that inherits from the event emitter class 
@@ -174,6 +181,9 @@
 
     - if you write module name in dependencies in package.json and you did not install it
         when you write (npm install ) in terminal will automatically install any module written in dependencies
+        this is usefull if you clone a repo without node-modules folder juts write npm install in terminal
+        and node will read dependencies in package.json and will install all modules
+
 
     - version of package is writter in 3 numbers (semantic version) ( x.y.z) ( x = main version , y = minor version , z = patch)
         Versioning Rules : 
@@ -185,6 +195,11 @@
             [3] When you make changes and the code is no more backwards compatible, you increment the major version
                 You have to reset the minor and patch version to zero
                 For example 1.1.1 to 2.0.0
+            * note : in dependencies and devDependencies ^ means allow to update minor version or patch but not update major version
+            * note : in dependencies and devDependencies ~ means allow to update patch only
+            * note : in dependencies and devDependencies * (without numbers) means allow to update all ( latest version)
+            * note : to update packages in dependencies and devDependencies write npm update
+
     - global package ( you can use it on terminal no need to import it in index.js to use it)
         like nodemon package we installed it by ( sudo npm install -g nodemon ) ( nodemon like watch mode)
         * note : use terminal not VSCode when you use sudo  
@@ -201,6 +216,15 @@
     - scripts : a shortcut written to use on terminal   
         for example instead of writting ( node index.js ) we can write in script ( "start" : "node index.js" )
         then on terminal we can write npm run start instead of node index.js
+
+* difference between 
+    - DevDependencies are the packages that are required for development and testing purposes only. 
+    These packages are not required for the application to run properly, 
+    but they are needed for tasks such as building, testing, and linting the code.
+    to install package to dev add --save-d or -D (like -g means global package)
+
+    - Dependencies are the packages that are required for your application to run properly. 
+    These packages are installed when you run the npm install command. 
 
 * CLI ( command line interface) you can create your own program like npm or git :
     - steps : 
@@ -250,4 +274,10 @@
         [4] const { parentPort } = require("worker_threads"); then parentPort.postMessage(j); in worker_thread.js to send j variable
 
 
-    
+* Exit on uncaught error 
+process.on(‘uncaughtException’, err => { 
+    console.error(‘there was an uncaught error : ${err} ‘ ) ;
+    process.exit(1);
+})
+
+
